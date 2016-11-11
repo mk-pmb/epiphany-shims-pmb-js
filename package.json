@@ -1,0 +1,30 @@
+{ "name": "epiphany-shims-pmb",
+  "version": "0.1.0",
+  "description": "Selected ES5+ shims for the epiphany browser.",
+  "keywords": [ "epiphany", "browser", "shim" ],
+
+  "author": "M.K. (https://github.com/mk-pmb)",
+  "homepage": "https://github.com/mk-pmb/epiphany-shims-pmb-js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mk-pmb/epiphany-shims-pmb-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mk-pmb/epiphany-shims-pmb-js/issues"
+  },
+
+  "private": false, "license": "ISC",
+
+  "main": "shims.js",
+  "scripts": { "test": "nodejs test/all.js" },
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+
+  "dependencies": {},
+  "devDependencies": {},
+
+
+  "npm vs. BOM = Unexpected token": "-*- coding: UTF-8 -*-"
+}
