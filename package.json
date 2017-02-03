@@ -1,7 +1,12 @@
 { "name": "epiphany-shims-pmb",
-  "version": "0.1.1",
-  "description": "This package has been superseded by msie6-shims-pmb.",
-  "keywords": [ "epiphany", "browser", "shim" ],
+  "version": "0.1.2",
+  "description": "Selected ES5+ shims for the epiphany browser, and (as of 0.1.2) MSIE 6.",
+  "keywords": [
+    "browser",
+    "epiphany",
+    "MSIE",
+    "shim"
+  ],
 
   "author": "M.K. (https://github.com/mk-pmb)",
   "homepage": "https://github.com/mk-pmb/epiphany-shims-pmb-js#readme",
