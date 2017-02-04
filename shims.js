@@ -4,7 +4,8 @@
   'use strict';
 
   var objPt = Object.prototype, OPtHas = objPt.hasOwnProperty,
-    arrPt = Array.prototype, arrSlice = arrPt.slice;
+    arrPt = Array.prototype, arrSlice = arrPt.slice,
+    tokenSkip = { token: 'skip' };
 
   function install(obj, key, func) {
     if (OPtHas.call(obj, key) && (obj[key] !== undefined)) { return; }
@@ -13,16 +14,20 @@
 
   install(Array, 'from', function toArray(src) { return arrSlice.call(src); });
 
-  function arrayMap(arr, iter, collect) {
+  function arrayMap(arr, trafo, collect) {
     var len = arr.length, idx, rslt;
     for (idx = 0; idx < len; idx += 1) {
-      rslt = iter(arr[idx], idx, arr);
-      if (collect) { collect[idx] = rslt; }
+      rslt = trafo(arr[idx], idx, arr);
+      if (collect && (rslt !== tokenSkip)) { collect[collect.length] = rslt; }
     }
     return collect;
   }
   install(arrPt, 'forEach', function forEach(f) { return arrayMap(this, f); });
   install(arrPt, 'map', function map(f) { return arrayMap(this, f, []); });
+  install(arrPt, 'filter', function filter(f) {
+    function g(val, idx, arr) { return (f(val, idx, arr) ? val : tokenSkip); }
+    return arrayMap(this, g, []);
+  });
 
   install(Object, 'keys', function keys(obj) {
     if ((obj === null) || (obj === undefined)) {
@@ -52,6 +57,20 @@
     return dest;
   });
 
+  (function () {
+    // MSIE 6 ''.split(/(rgx)/) doesn't preserve capture groups. :-(
+    var test = ['', '::', 'hello', ':', 'world', '::', ''];
+    if (test.join('').split(/(:+)/).join('!') === test.join('!')) { return; }
+    String.prototype.split = function (rgx) {
+      var tx = this, parts = [], match;
+      while (true) {
+        match = (tx && tx.match(rgx));
+        if (!match) { return parts.concat(tx); }
+        parts = parts.concat(tx.slice(0, match.index), match.slice(1));
+        tx = tx.slice(match.index + match[0].length);
+      }
+    };
+  }());
 
 
 
