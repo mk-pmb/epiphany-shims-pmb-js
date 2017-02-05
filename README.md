@@ -41,7 +41,7 @@ Usage
 ```html
 <script src="../../es5-shim/es5-shim.js"></script>
 <script src="../../epiphany-shims-pmb/shims.js">
-  // work-around for es5-shim's sparse array bug:
+  // work-around for es5-shim's assumption your arrays tend to be sparse:
   // https://github.com/es-shims/es5-shim/issues/190
 </script>
 ```

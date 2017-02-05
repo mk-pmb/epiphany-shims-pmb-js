@@ -1,5 +1,5 @@
 { "name": "epiphany-shims-pmb",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Selected ES5+ shims for the epiphany browser, and (as of 0.1.2) MSIE\u00A06.",
   "keywords": [
     "browser",
