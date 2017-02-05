@@ -14,6 +14,17 @@
 
   install(Array, 'from', function toArray(src) { return arrSlice.call(src); });
 
+  (function checkSparseArrayBug() {
+    // You might have loaded this bug from es5-shim:
+    // https://github.com/es-shims/es5-shim/issues/190
+    var sparseArray = [ 1, undefined, 3 ];
+    if (!sparseArray.map) { return; }
+    if (sparseArray.map(String).join(':') === '1:undefined:3') { return; }
+    delete arrPt.filter;
+    delete arrPt.forEach;
+    delete arrPt.map;
+  }());
+
   function arrayMap(arr, trafo, collect) {
     var len = arr.length, idx, rslt;
     for (idx = 0; idx < len; idx += 1) {
