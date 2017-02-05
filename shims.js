@@ -25,19 +25,21 @@
     delete arrPt.map;
   }());
 
-  function arrayMap(arr, trafo, collect) {
+  function arrayMap(arr, trafo, ctx, collect) {
     var len = arr.length, idx, rslt;
     for (idx = 0; idx < len; idx += 1) {
-      rslt = trafo(arr[idx], idx, arr);
+      rslt = trafo.call(ctx, arr[idx], idx, arr);
       if (collect && (rslt !== tokenSkip)) { collect[collect.length] = rslt; }
     }
     return collect;
   }
-  install(arrPt, 'forEach', function forEach(f) { return arrayMap(this, f); });
-  install(arrPt, 'map', function map(f) { return arrayMap(this, f, []); });
-  install(arrPt, 'filter', function filter(f) {
-    function g(val, idx, arr) { return (f(val, idx, arr) ? val : tokenSkip); }
-    return arrayMap(this, g, []);
+  install(arrPt, 'forEach',
+    function forEach(f, ctx) { return arrayMap(this, f, ctx, null); });
+  install(arrPt, 'map',
+    function map(f, ctx) { return arrayMap(this, f, ctx, []); });
+  install(arrPt, 'filter', function filter(f, ctx) {
+    function g(v, i, a) { return (f.call(ctx, v, i, a) ? val : tokenSkip); }
+    return arrayMap(this, g, null, []);
   });
 
   install(Object, 'keys', function keys(obj) {
